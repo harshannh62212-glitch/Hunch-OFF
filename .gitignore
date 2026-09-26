@@ -3,3 +3,12 @@
 node_modules
 *.log
 .tmp.driveupload
+.venv/
+**/.venv/
+**/node_modules/
+__pycache__/
+**/__pycache__/
+*.pyc
+dist/
+**/dist/
+*.pth

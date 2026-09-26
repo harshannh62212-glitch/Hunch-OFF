@@ -1,0 +1,23 @@
+---
+description: Keep the Hunch folder synced between the M1 Air and the M4 Mini over Tailscale
+alwaysApply: true
+---
+
+# Hunch folder sync (M1 Air ↔ M4 Mini)
+
+The project lives in two folders that stay the same. A change on either Mac is copied to the other over Tailscale. Do not treat them as separate copies.
+
+| Machine | Folder | Tailscale | SSH |
+|---|---|---|---|
+| M1 MacBook Air (this PC when the workspace is `/Users/harshan/Hunch`) | `/Users/harshan/Hunch` | `harshans-macbook-air` `100.78.46.80` | local |
+| M4 Mac Mini | `/Users/nhharshan/Hunch` | `harshans-mac-mini` `100.92.134.100` | `ssh m4` (user `nhharshan`) |
+
+Sync is Syncthing v2, folder id `hunch`, send/receive, filesystem watcher on. Each side listens only on its Tailscale IP port 22000. Global discovery and relays are off.
+
+- Air device: `OPSGBIK-ZNZFAXM-AWPPBVK-BQT6V7P-WWASAHV-YLVYQFQ-QPFTBDY-C6JRTA3`
+- Mini device: `7GFKXME-A2EKV5V-YUOKEDK-VVXPH2D-DVWTPSN-EVJ7EGY-WN6FL7C-FLP7FQQ`
+- Service: `brew services` `syncthing` (starts at login)
+- GUI (localhost only): user `hunch`, password in `~/.config/hunch-syncthing/gui-password` on that Mac
+- Ignores: `.stignore` (`.DS_Store`, `node_modules`, `.venv`, `__pycache__`, `dist`, logs). Source, CAD, `.git`, and model weights do sync.
+
+If the Mini copy is missing or stale, check `brew services info syncthing` on both Macs and `tailscale status` before editing only one side.
